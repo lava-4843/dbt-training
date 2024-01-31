@@ -1,15 +1,20 @@
 select 
  --from raw_orders
- o.order_id,
- o.orderdate,
- o.shipdate,
- o.shipmode,
+ o.OORDERID,
+ o.ORDERSDATE,
+ o.SHIPDATE,
+ o.SHIPMODE,
  CAST(o.ORDERSELLINGPRICE-o.ORDERCOSTPRICE AS  INT) AS Profit,
  --from raw_cusomer
- c.customername,
- c.segment,
- c.country
+ c.CUSTOMERNAME,
+ c.SEGMENT,
+ c.COUNTRY,
+  p.CATEGORY,
+ p.PRODUCTNAME,
+ p.SUBCATEGORY
  
 FROM {{ ref('Raw_Orders') }} as o
 LEFT JOIN {{ ref('Raw_customer') }} as c
-on o.CUSTOMERID=c.CUSTOMERID 
+on o.CSUTOMERID=c.CUSTOMERID 
+LEFT JOIN {{ ref('Raw_product') }} p
+ON o.PRODUCTID=p.PRODUCTID
